@@ -1,0 +1,9 @@
+Sahibiden.com scraping project
+------------------------------
+Araba / Classes
+---------------
+thumbnail -> galleryThumbWrapper
+searchResultsClassifiedId -> id
+classifiedTitle -> title
+searchResultsPriceValue -> price
+searchResultsGallerySubContent -> (searchResultsGalleryAttributeTitle, searchResultsGalleryAttributeTitle) -> (İlan Tarihi, İl / İlçe)
