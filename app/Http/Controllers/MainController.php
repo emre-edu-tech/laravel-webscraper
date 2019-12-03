@@ -17,6 +17,7 @@ class MainController extends Controller
         $guzzleCLient = new GuzzleClient(array(
             'timeout' => 60
         ));
+        
         $response = $guzzleCLient->request('GET',$url);
         $response_status_code = $response->getStatusCode();
         if ($response_status_code == 200) {
