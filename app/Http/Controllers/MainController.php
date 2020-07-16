@@ -33,13 +33,33 @@ class MainController extends Controller
                 $car_items = $node->filter('.cldt-summary-full-item')->each(function($nested_node) {
 
                     // $img_src = $node->filter('.galleryThumbWrapper > a > img')->attr('src');
-                    $title = $nested_node->filter('.cldt-summary-headline .cldt-summary-makemodel')->text();
+                    $title = trim($nested_node->filter('.cldt-summary-headline .cldt-summary-makemodel')->text());
+
                     $version = $nested_node->filter('.cldt-summary-headline .cldt-summary-version')->text();
-                    $price = $nested_node->filter('.cldt-price')->text();
-                    $mileage = $nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(0)->text();
-                    $production_month_year = $nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(1)->text();
-                    $horse_power = $nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(2)->text();
-                    $condition = $nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(3)->text();
+                    $version_array = explode('|', $version);
+                    $version = trim($version_array[0]);
+
+                    $price = trim($nested_node->filter('.cldt-price')->text());
+                    $price_array = explode(',', $price);
+                    $price = trim($price_array[0]);
+
+                    $mileage = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(0)->text());
+
+                    $production_month_year = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(1)->text());
+
+                    $horse_power = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(2)->text());
+
+                    $condition = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(3)->text());
+
+                    $transmission = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(5)->text());
+
+                    $fuel_type = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(6)->text());
+
+                    $fuel_consumption = $nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(7)->html();
+                    $fuel_consumption_array = explode('<as24-footnote-item>', $fuel_consumption);
+                    $fuel_consumption = trim($fuel_consumption_array[0]);
+
+                    // getting image paths
                     $car_images_string = $nested_node->filter('.cldt-summary-gallery > as24-listing-summary-image')->attr('data-images');
                     $car_images_raw = explode(',', $car_images_string);
                     $car_images_normal = array();
@@ -48,9 +68,7 @@ class MainController extends Controller
                         $normal_car_image = rtrim($normal_car_image_array[0], '/');
                         array_push($car_images_normal, $normal_car_image);
                     }
-                    // $seller_logo = $nested_node->filter('.cldt-summary-seller > .cldf-summary-seller-data .cldf-summary-seller-logo > img')->attr('src');
                     // $post_date =$node->filter('div.searchResultsGallerySubContent > div:nth-child(1)')->text();
-                    // $place = $node->filter('div.searchResultsGallerySubContent > div:nth-child(2)')->text();
                     return array (
                         'title' => $title,
                         'version' => $version,
@@ -60,7 +78,9 @@ class MainController extends Controller
                         'horse_power' => $horse_power,
                         'production_month_year' => $production_month_year,
                         'condition' => $condition,
-                        // 'place' => $place,
+                        'transmission' => $transmission,
+                        'fuel_type' => $fuel_type,
+                        'fuel_consumption' => $fuel_consumption,
                     );
                 });
 
