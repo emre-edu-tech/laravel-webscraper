@@ -11,4 +11,8 @@
 |
 */
 
-Route::get('/','MainController@scrape');
+Route::get('/', function() {
+    return view('welcome');
+});
+
+Route::get('/scrape-autoscout24.de', 'MainController@scrape');
