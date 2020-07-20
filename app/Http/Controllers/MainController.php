@@ -79,6 +79,8 @@ class MainController extends Controller
                     $condition = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(3)->text());
 
                     $number_of_car_owners = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(4)->text());
+                    $number_of_car_owners_arr = explode(' ', $number_of_car_owners);
+                    $number_of_car_owners_value = $number_of_car_owners_arr[0];
 
                     $transmission = trim($nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(5)->text());
 
@@ -93,6 +95,8 @@ class MainController extends Controller
                     $co2_emission = $nested_node->filter('.cldt-summary-vehicle-data ul li')->eq(8)->html();
                     $co2_emission_array = explode('<as24-footnote-item>', $co2_emission);
                     $co2_emission = trim($co2_emission_array[0]);
+                    $co2_emission_value_array = explode(' ', $co2_emission);
+                    $co2_emission_value = $co2_emission_value_array[0];
 
                     // getting image paths
                     $car_images_string = $nested_node->filter('.cldt-summary-gallery > as24-listing-summary-image')->attr('data-images');
@@ -125,11 +129,13 @@ class MainController extends Controller
                         'production_month_year' => $production_month_year,
                         'condition' => $condition,
                         'number_of_car_owners'  => $number_of_car_owners,
+                        'number_of_car_owners_value'    => $number_of_car_owners_value,
                         'transmission' => $transmission,
                         'fuel_type' => $fuel_type,
                         'fuel_consumption' => $fuel_consumption,
                         'fuel_consumption_only' => $fuel_consumption_only,
                         'co2_emission'  => $co2_emission,
+                        'co2_emission_value'    => $co2_emission_value,
                     );
                 });
 
